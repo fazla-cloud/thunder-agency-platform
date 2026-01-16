@@ -176,6 +176,51 @@ npm start
 npm run lint
 ```
 
+## Deployment to Vercel
+
+This project is ready for deployment on Vercel. Follow these steps:
+
+### 1. Push to GitHub
+
+Make sure your code is pushed to GitHub (already done if you're reading this).
+
+### 2. Deploy on Vercel
+
+1. Go to [vercel.com](https://vercel.com) and sign in with your GitHub account
+2. Click "Add New Project"
+3. Import your GitHub repository: `fazla-cloud/thunder-agency-platform`
+4. Vercel will automatically detect it's a Next.js project
+
+### 3. Configure Environment Variables
+
+In the Vercel project settings, add these environment variables:
+
+- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Your Supabase anonymous key
+
+You can find these values in your Supabase project:
+- Go to Project Settings → API
+- Copy the "Project URL" and "anon public" key
+
+### 4. Deploy
+
+Click "Deploy" and Vercel will:
+- Install dependencies
+- Build your Next.js application
+- Deploy it to a production URL
+
+### 5. Post-Deployment Setup
+
+After deployment:
+1. Make sure your Supabase database has the schema applied (run `supabase/migrations/001_initial_schema.sql`)
+2. Create an admin user by signing up through the deployed app, then updating the role in Supabase Dashboard
+
+### Vercel Configuration
+
+The project uses Next.js 16+ with App Router, which Vercel supports out of the box. No additional configuration files are needed.
+
+**Note:** Make sure your Supabase project allows connections from your Vercel domain. Check Supabase Dashboard → Settings → API → CORS settings if you encounter CORS issues.
+
 ## License
 
 This is a demo project for demonstration purposes.
