@@ -16,10 +16,10 @@ export default async function ProfilePage() {
   const { data: { user: authUser } } = await supabase.auth.getUser()
 
   return (
-    <div className="p-8">
-      <div className="mb-6">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">My Profile</h1>
-        <p className="text-muted-foreground mt-2">Manage your profile information</p>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">My Profile</h1>
+        <p className="text-muted-foreground mt-1 sm:mt-2 text-sm sm:text-base">Manage your profile information</p>
       </div>
 
       <div className="max-w-2xl">

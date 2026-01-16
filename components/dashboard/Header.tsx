@@ -2,7 +2,7 @@
 
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
-import { LogOut, User, Settings } from 'lucide-react'
+import { LogOut, User, Settings, Menu } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -18,9 +18,10 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle'
 interface HeaderProps {
   userName?: string | null
   avatarUrl?: string | null
+  onMenuClick?: () => void
 }
 
-export function Header({ userName, avatarUrl }: HeaderProps) {
+export function Header({ userName, avatarUrl, onMenuClick }: HeaderProps) {
   const supabase = createClient()
   
   // Get public URL for avatar
@@ -49,8 +50,18 @@ export function Header({ userName, avatarUrl }: HeaderProps) {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-border bg-card px-6">
+    <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 sm:px-6">
       <div className="flex items-center gap-4">
+        {onMenuClick && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            onClick={onMenuClick}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+        )}
         <h2 className="text-lg font-semibold text-foreground tracking-tight">Dashboard</h2>
       </div>
       <div className="flex items-center gap-4">

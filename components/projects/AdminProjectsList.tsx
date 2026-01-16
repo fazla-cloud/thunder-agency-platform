@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ProjectCard } from './ProjectCard'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -23,12 +23,26 @@ export function AdminProjectsList({
   clientMap
 }: AdminProjectsListProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768) // md breakpoint
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Force list view on mobile
+  const effectiveViewMode = isMobile ? 'list' : viewMode
 
   if (projects && projects.length > 0) {
     return (
       <div className="space-y-4">
-        {/* View Toggle */}
-        <div className="flex justify-end">
+        {/* View Toggle - Hidden on mobile */}
+        <div className="flex justify-end hidden md:flex">
           <div className="flex items-center gap-1 p-1 bg-muted/50 rounded-lg border border-border">
             <Button
               variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -52,7 +66,7 @@ export function AdminProjectsList({
         </div>
 
         {/* Projects */}
-        {viewMode === 'grid' ? (
+        {effectiveViewMode === 'grid' ? (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <ProjectCard 

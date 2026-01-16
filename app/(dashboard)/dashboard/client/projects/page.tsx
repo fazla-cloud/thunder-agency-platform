@@ -61,13 +61,15 @@ export default async function ClientProjectsPage({
   }
 
   return (
-    <div className="p-8">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">Projects</h1>
-          <p className="text-muted-foreground mt-2">Manage your projects</p>
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">Projects</h1>
+          <p className="text-muted-foreground mt-1 sm:mt-2 text-sm sm:text-base">Manage your projects</p>
         </div>
-        <NewProjectButton clientId={profile.id} />
+        <div className="flex-shrink-0">
+          <NewProjectButton clientId={profile.id} />
+        </div>
       </div>
 
       <SearchFilter 

@@ -235,8 +235,8 @@ export function ProfileEditor({ profile, userEmail }: ProfileEditorProps) {
           {/* Profile Picture Section */}
           <div className="space-y-2">
             <Label>Profile Picture</Label>
-            <div className="flex items-center gap-4">
-              <div className="relative">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="relative flex-shrink-0 mx-auto sm:mx-0">
                 {previewUrl || (avatarUrl && getAvatarUrl(avatarUrl)) ? (
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-border">
                     <Image
@@ -253,13 +253,14 @@ export function ProfileEditor({ profile, userEmail }: ProfileEditorProps) {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={uploading}
+                    className="w-full sm:w-auto"
                   >
                     <Upload className="mr-2 h-4 w-4" />
                     {uploading ? 'Uploading...' : 'Upload'}
@@ -271,6 +272,7 @@ export function ProfileEditor({ profile, userEmail }: ProfileEditorProps) {
                       size="sm"
                       onClick={handleRemoveAvatar}
                       disabled={uploading}
+                      className="w-full sm:w-auto"
                     >
                       <X className="mr-2 h-4 w-4" />
                       Remove

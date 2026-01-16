@@ -90,7 +90,7 @@ export function TaskListWithTabs({
 
   return (
     <Tabs value={status} onValueChange={handleStatusChange} className="w-full">
-      <TabsList className="mb-6">
+      <TabsList className="mb-6 hidden md:flex">
         {statusTabs.map((tab) => (
           <TabsTrigger 
             key={tab.value} 

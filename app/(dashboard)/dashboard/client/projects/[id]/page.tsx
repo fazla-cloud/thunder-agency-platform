@@ -112,12 +112,12 @@ export default async function ProjectDetailPage({
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       <TaskRefreshHandler />
       {/* Header with back button */}
-      <div className="mb-6">
+      <div className="mb-4 sm:mb-6">
         <Link href="/dashboard/client/projects">
-          <Button variant="ghost" className="mb-4 -ml-2">
+          <Button variant="ghost" className="mb-4 -ml-2 text-sm sm:text-base">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Projects
           </Button>
@@ -125,18 +125,18 @@ export default async function ProjectDetailPage({
       </div>
 
       {/* Project Info Card */}
-      <Card className="mb-6">
+      <Card className="mb-4 sm:mb-6">
         <CardHeader>
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div className="flex-1 min-w-0">
               <EditableProjectName
                 projectId={typedProject.id}
                 initialName={typedProject.name}
-                className="text-2xl font-semibold tracking-tight mb-2"
+                className="text-xl sm:text-2xl font-semibold tracking-tight mb-2"
               />
-              <div className="flex items-center gap-3 mt-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mt-2">
                 <StatusBadge status={typedProject.status} />
-                <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground">
                   <Calendar className="h-3.5 w-3.5" />
                   <span>Created {new Date(typedProject.created_at).toLocaleDateString('en-US', { 
                     month: 'long', 
@@ -146,7 +146,9 @@ export default async function ProjectDetailPage({
                 </div>
               </div>
             </div>
-            <NewTaskButton clientId={profile.id} projectId={id} />
+            <div className="flex-shrink-0">
+              <NewTaskButton clientId={profile.id} projectId={id} />
+            </div>
           </div>
         </CardHeader>
         {typedProject.description && (
@@ -161,18 +163,16 @@ export default async function ProjectDetailPage({
 
       {/* Tasks Section */}
       <div className="mb-4">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">Tasks</h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              {taskCounts.total} task{(taskCounts.total !== 1 ? 's' : '')} in this project
-            </p>
-          </div>
+        <div className="mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold tracking-tight text-foreground">Tasks</h2>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+            {taskCounts.total} task{(taskCounts.total !== 1 ? 's' : '')} in this project
+          </p>
         </div>
 
         {/* Task Stats */}
         {taskCounts.total > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
             <StatusCard label="Drafts" count={taskCounts.drafts} icon={FileEdit} />
             <StatusCard label="In Progress" count={taskCounts.in_progress} icon={PlayCircle} />
             <StatusCard label="Completed" count={taskCounts.completed} icon={CheckCircle2} />

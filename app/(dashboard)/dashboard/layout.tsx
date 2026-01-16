@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getCurrentProfile } from '@/lib/auth'
-import { Sidebar } from '@/components/dashboard/Sidebar'
-import { Header } from '@/components/dashboard/Header'
+import { DashboardLayoutClient } from '@/components/dashboard/DashboardLayoutClient'
 import { getDefaultRedirect } from '@/lib/routing'
 
 export default async function DashboardLayout({
@@ -21,14 +20,12 @@ export default async function DashboardLayout({
   // This layout just ensures the user is authenticated and has a profile
 
   return (
-    <div className="flex h-screen bg-background">
-      <Sidebar role={profile.role as 'client' | 'admin' | 'designer' | 'marketer'} />
-      <div className="flex flex-1 flex-col overflow-hidden bg-background">
-        <Header userName={profile.full_name} avatarUrl={profile.avatar_url} />
-        <main className="flex-1 overflow-y-auto bg-background">
-          {children}
-        </main>
-      </div>
-    </div>
+    <DashboardLayoutClient 
+      role={profile.role as 'client' | 'admin' | 'designer' | 'marketer'}
+      userName={profile.full_name}
+      avatarUrl={profile.avatar_url}
+    >
+      {children}
+    </DashboardLayoutClient>
   )
 }

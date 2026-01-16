@@ -6,7 +6,14 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
-import { Search, Calendar, X } from 'lucide-react'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog'
+import { Search, Calendar, X, Filter } from 'lucide-react'
 
 interface SearchFilterProps {
   placeholder?: string
@@ -28,8 +35,9 @@ export function SearchFilter({
   const [searchQuery, setSearchQuery] = useState(searchParams.get(searchParamKey) || '')
   const [dateFrom, setDateFrom] = useState(searchParams.get(dateFromParamKey) || '')
   const [dateTo, setDateTo] = useState(searchParams.get(dateToParamKey) || '')
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false)
 
-  const handleFilter = () => {
+  const applyFilters = () => {
     const params = new URLSearchParams(searchParams.toString())
     
     if (searchQuery.trim()) {
@@ -57,6 +65,15 @@ export function SearchFilter({
     }
   }
 
+  const handleFilter = () => {
+    applyFilters()
+    setFilterDialogOpen(false)
+  }
+
+  const handleMobileFilterClick = () => {
+    setFilterDialogOpen(true)
+  }
+
   const handleClear = () => {
     setSearchQuery('')
     setDateFrom('')
@@ -81,74 +98,152 @@ export function SearchFilter({
   const hasFilters = searchQuery || dateFrom || dateTo
 
   return (
-    <Card className="mb-6 border-border bg-card dark:bg-card">
-      <CardContent className="pt-4 pb-4 px-4">
-        <div className="flex flex-col md:flex-row gap-4 items-end">
-          {/* Search Input */}
-          <div className="flex-1 w-full md:w-auto">
-            <Label htmlFor="search" className="mb-2 block">Search:</Label>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="search"
-                type="text"
-                placeholder={placeholder}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={handleKeyPress}
-                className="pl-9"
-              />
+    <>
+      <Card className="mb-6 border-border bg-card dark:bg-card">
+        <CardContent className="pt-4 pb-4 px-4">
+          <div className="flex flex-col md:flex-row gap-4 items-end">
+            {/* Search Input */}
+            <div className="flex-1 w-full md:w-auto">
+              <Label htmlFor="search" className="mb-2 block">Search:</Label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="search"
+                  type="text"
+                  placeholder={placeholder}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  className="pl-9"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Date From */}
-          <div className="w-full md:w-auto">
-            <Label htmlFor="dateFrom" className="mb-2 block">Date from:</Label>
-            <div className="relative">
-              <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-              <Input
-                id="dateFrom"
-                type="date"
-                value={dateFrom}
-                onChange={(e) => setDateFrom(e.target.value)}
-                className="pr-9"
-              />
+            {/* Date From - Hidden on mobile */}
+            <div className="w-full md:w-auto hidden md:block">
+              <Label htmlFor="dateFrom" className="mb-2 block">Date from:</Label>
+              <div className="relative">
+                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Input
+                  id="dateFrom"
+                  type="date"
+                  value={dateFrom}
+                  onChange={(e) => setDateFrom(e.target.value)}
+                  className="pr-9"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Date To */}
-          <div className="w-full md:w-auto">
-            <Label htmlFor="dateTo" className="mb-2 block">Date to:</Label>
-            <div className="relative">
-              <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-              <Input
-                id="dateTo"
-                type="date"
-                value={dateTo}
-                onChange={(e) => setDateTo(e.target.value)}
-                className="pr-9"
-              />
+            {/* Date To - Hidden on mobile */}
+            <div className="w-full md:w-auto hidden md:block">
+              <Label htmlFor="dateTo" className="mb-2 block">Date to:</Label>
+              <div className="relative">
+                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Input
+                  id="dateTo"
+                  type="date"
+                  value={dateTo}
+                  onChange={(e) => setDateTo(e.target.value)}
+                  className="pr-9"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Filter Button */}
-          <div className="flex gap-2">
-            <Button onClick={handleFilter} className="whitespace-nowrap">
-              Filter
-            </Button>
-            {hasFilters && (
-              <Button
-                variant="outline"
-                onClick={handleClear}
-                className="whitespace-nowrap"
+            {/* Filter Button */}
+            <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+              <Button 
+                onClick={handleFilter} 
+                className="whitespace-nowrap hidden md:inline-flex"
               >
-                <X className="h-4 w-4 mr-1" />
-                Clear
+                Filter
               </Button>
-            )}
+              <Button 
+                onClick={handleMobileFilterClick} 
+                className="whitespace-nowrap md:hidden w-full"
+              >
+                <Filter className="h-4 w-4 mr-2" />
+                Filter
+              </Button>
+              {hasFilters && (
+                <Button
+                  variant="outline"
+                  onClick={handleClear}
+                  className="whitespace-nowrap w-full sm:w-auto"
+                >
+                  <X className="h-4 w-4 mr-1" />
+                  Clear
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      {/* Filter Dialog for Mobile */}
+      <Dialog open={filterDialogOpen} onOpenChange={setFilterDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Filter Options</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            {/* Date From */}
+            <div className="space-y-2">
+              <Label htmlFor="dialogDateFrom">Date from:</Label>
+              <div className="relative">
+                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Input
+                  id="dialogDateFrom"
+                  type="date"
+                  value={dateFrom}
+                  onChange={(e) => setDateFrom(e.target.value)}
+                  className="pr-9"
+                />
+              </div>
+            </div>
+
+            {/* Date To */}
+            <div className="space-y-2">
+              <Label htmlFor="dialogDateTo">Date to:</Label>
+              <div className="relative">
+                <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Input
+                  id="dialogDateTo"
+                  type="date"
+                  value={dateTo}
+                  onChange={(e) => setDateTo(e.target.value)}
+                  className="pr-9"
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="flex-col sm:flex-row gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setFilterDialogOpen(false)}
+              className="w-full sm:w-auto order-2 sm:order-1"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDateFrom('')
+                setDateTo('')
+              }}
+              className="w-full sm:w-auto order-1 sm:order-2"
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear Dates
+            </Button>
+            <Button 
+              onClick={handleFilter} 
+              className="w-full sm:w-auto order-3"
+            >
+              Apply Filters
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

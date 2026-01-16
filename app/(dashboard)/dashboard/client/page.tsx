@@ -54,13 +54,13 @@ export default async function ClientDashboard() {
   }))
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">Dashboard</h1>
-        <p className="text-muted-foreground mt-2">Welcome back, {profile.full_name || 'Client'}</p>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">Dashboard</h1>
+        <p className="text-muted-foreground mt-1 sm:mt-2 text-sm sm:text-base">Welcome back, {profile.full_name || 'Client'}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3 mb-8">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6 sm:mb-8">
         <DashboardCard
           title="Total Tasks"
           value={totalTasks}
@@ -81,11 +81,11 @@ export default async function ClientDashboard() {
         />
       </div>
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
         <QuickActions role="client" clientId={profile.id} />
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         <TaskStatusChart data={statusData} />
         <TasksOverTimeChart data={tasksOverTimeData} />
       </div>
