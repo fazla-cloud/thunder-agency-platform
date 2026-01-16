@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -13,7 +13,7 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle'
 import { useTheme } from '@/components/theme/ThemeProvider'
 import { Mail } from 'lucide-react'
 
-export default function ConfirmPage() {
+function ConfirmPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { theme } = useTheme()
@@ -72,12 +72,17 @@ export default function ConfirmPage() {
       })
 
       if (verifyError) {
-        // Try alternative method for token
-        const { error: altError } = await supabase.auth.verifyOtp({
-          token: token,
-          type: 'signup',
-        })
-        if (altError) throw altError
+        // Try alternative method for token (requires email)
+        if (email) {
+          const { error: altError } = await supabase.auth.verifyOtp({
+            token: token,
+            type: 'signup',
+            email: email,
+          })
+          if (altError) throw altError
+        } else {
+          throw verifyError
+        }
       }
 
       setSuccess(true)
@@ -341,5 +346,19 @@ export default function ConfirmPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function ConfirmPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    }>
+      <ConfirmPageContent />
+    </Suspense>
   )
 }

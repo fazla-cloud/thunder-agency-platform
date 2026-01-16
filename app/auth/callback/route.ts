@@ -29,22 +29,11 @@ export async function GET(request: Request) {
   }
 
   if (token && type === 'signup') {
-    // Try token_hash first (for email link tokens)
-    let verifyError = null
-    let verifyResult = await supabase.auth.verifyOtp({
+    // Verify token_hash (for email link tokens)
+    const { error: verifyError } = await supabase.auth.verifyOtp({
       token_hash: token,
       type: 'signup',
     })
-    verifyError = verifyResult.error
-
-    // If that fails, try token directly
-    if (verifyError) {
-      verifyResult = await supabase.auth.verifyOtp({
-        token: token,
-        type: 'signup',
-      })
-      verifyError = verifyResult.error
-    }
     
     if (!verifyError) {
       // Get user profile to determine redirect
