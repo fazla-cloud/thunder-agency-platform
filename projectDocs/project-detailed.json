@@ -1,0 +1,173 @@
+{
+    "project": {
+      "name": "Subscription-Based Marketing Agency Platform",
+      "description": "A SaaS platform where clients subscribe monthly to submit, track, and receive creative marketing requests such as social media posts, reels, and videos. Admins manage requests and assign them to designers or editors.",
+      "reference": "https://www.bolteam.com/",
+      "business_model": "Monthly subscription (retainer-based marketing services)"
+    },
+  
+    "roles": {
+      "client": {
+        "description": "Paying customer who submits creative requests and tracks progress.",
+        "permissions": {
+          "create_request": true,
+          "view_own_requests": true,
+          "track_status": true,
+          "download_deliverables": true,
+          "request_revisions": true,
+          "manage_subscription": true,
+          "assign_tasks": false,
+          "view_other_clients": false
+        }
+      },
+      "admin": {
+        "description": "Agency owner or webmaster who manages the platform and workflow.",
+        "permissions": {
+          "view_all_clients": true,
+          "view_all_requests": true,
+          "assign_tasks": true,
+          "change_task_status": true,
+          "manage_users": true,
+          "manage_subscriptions": true,
+          "upload_deliverables": true,
+          "archive_tasks": true
+        }
+      },
+      "designer": {
+        "description": "Internal staff or freelancer who completes assigned creative tasks.",
+        "permissions": {
+          "view_assigned_tasks": true,
+          "upload_deliverables": true,
+          "request_clarification": true,
+          "change_task_status": false,
+          "manage_subscriptions": false
+        }
+      }
+    },
+  
+    "subscription_plans": [
+      {
+        "plan_id": "basic",
+        "name": "Basic Plan",
+        "price": "monthly",
+        "features": {
+          "active_requests_limit": 2,
+          "revisions": 1,
+          "delivery_speed": "standard",
+          "supported_formats": ["Instagram Post"]
+        }
+      },
+      {
+        "plan_id": "pro",
+        "name": "Pro Plan",
+        "price": "monthly",
+        "features": {
+          "active_requests_limit": 5,
+          "revisions": 3,
+          "delivery_speed": "fast",
+          "supported_formats": ["Instagram Post", "Reel", "Story"]
+        }
+      },
+      {
+        "plan_id": "premium",
+        "name": "Premium Plan",
+        "price": "monthly",
+        "features": {
+          "active_requests_limit": "unlimited",
+          "revisions": "unlimited",
+          "delivery_speed": "priority",
+          "supported_formats": ["All formats"]
+        }
+      }
+    ],
+  
+    "request": {
+      "fields": {
+        "request_id": "string",
+        "client_id": "string",
+        "content_type": "post | reel | video | banner",
+        "platform": ["Instagram", "Facebook", "YouTube", "TikTok"],
+        "duration_seconds": "number (optional)",
+        "dimensions": "string (e.g. 1080x1920)",
+        "description": "string",
+        "attachments": ["file_url"],
+        "status": "new | accepted | in_progress | completed | archived",
+        "assigned_to": "designer_id",
+        "revision_count": "number",
+        "created_at": "timestamp",
+        "due_date": "timestamp"
+      }
+    },
+  
+    "workflow": [
+      "Client subscribes to a plan",
+      "Client submits a creative request",
+      "Admin reviews and accepts the request",
+      "Admin assigns the request to a designer/editor",
+      "Designer uploads deliverables",
+      "Admin or system marks request as completed",
+      "Client downloads deliverables",
+      "Client requests revision (if allowed)"
+    ],
+  
+    "dashboard": {
+      "client_view": {
+        "tabs": ["Active", "In Progress", "Completed", "Archived"],
+        "features": [
+          "Submit request",
+          "Track task status",
+          "Download files",
+          "View revision count",
+          "Subscription status alert"
+        ]
+      },
+      "admin_view": {
+        "tabs": ["All Requests", "Clients", "Designers", "Subscriptions"],
+        "features": [
+          "Assign tasks",
+          "Change request status",
+          "Upload deliverables",
+          "Manage plans",
+          "View analytics"
+        ]
+      },
+      "designer_view": {
+        "tabs": ["Assigned Tasks", "Completed Tasks"],
+        "features": [
+          "View task details",
+          "Upload files",
+          "Communicate with admin"
+        ]
+      }
+    },
+  
+    "notifications": {
+      "events": [
+        "request_submitted",
+        "request_accepted",
+        "task_assigned",
+        "task_completed",
+        "revision_requested",
+        "subscription_expired"
+      ],
+      "channels": ["email", "in_app"]
+    },
+  
+    "access_rules": {
+      "subscription_required": true,
+      "inactive_subscription_behavior": {
+        "can_submit_requests": false,
+        "can_download_files": false,
+        "can_view_completed": true
+      }
+    },
+  
+    "future_features": [
+      "Usage analytics",
+      "Team chat",
+      "Auto task queue",
+      "AI brief validation",
+      "White-label branding"
+    ]
+  }
+  

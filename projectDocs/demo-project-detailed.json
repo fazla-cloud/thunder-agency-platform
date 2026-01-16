@@ -1,0 +1,194 @@
+{
+    "demo_project": {
+      "purpose": "Build a functional demo of a subscription-based marketing agency platform to demonstrate authentication, role-based dashboards, and task management workflow.",
+      "status": "demo_only",
+      "production_ready": false
+    },
+  
+    "tech_stack": {
+      "frontend": {
+        "framework": "React",
+        "ui_library": "shadcn/ui",
+        "style_goal": "Clean SaaS UI, no AI vibe, Bolteam-like"
+      },
+      "backend": {
+        "platform": "Supabase",
+        "features_used": [
+          "Authentication",
+          "PostgreSQL Database",
+          "Row Level Security (RLS)",
+          "Storage (basic)"
+        ]
+      }
+    },
+  
+    "roles_supported": {
+      "client": {
+        "dashboard": true,
+        "can_create_projects": true,
+        "can_create_tasks": true,
+        "can_view_own_tasks": true
+      },
+      "admin": {
+        "dashboard": true,
+        "can_view_all_projects": true,
+        "can_assign_tasks": true,
+        "can_change_task_status": true
+      },
+      "designer": {
+        "included_in_demo": false,
+        "note": "Can be added later; tasks can be assigned to a mock designer ID"
+      }
+    },
+  
+    "features_to_build_now": {
+      "authentication": {
+        "provider": "Supabase Auth",
+        "methods": ["email_password"],
+        "role_assignment": "Manual (profile table)"
+      },
+  
+      "dashboards": {
+        "client_dashboard": {
+          "widgets": [
+            "Total Tasks",
+            "In Progress Tasks",
+            "Completed Tasks"
+          ],
+          "pages": [
+            "Project List",
+            "Task List",
+            "Add Project",
+            "Add Task"
+          ]
+        },
+        "admin_dashboard": {
+          "widgets": [
+            "All Tasks",
+            "Active Projects",
+            "Pending Tasks"
+          ],
+          "pages": [
+            "All Projects",
+            "All Tasks",
+            "Assign Task"
+          ]
+        }
+      },
+  
+      "project_management": {
+        "create_project": true,
+        "fields": [
+          "project_name",
+          "client_id",
+          "description",
+          "status",
+          "created_at"
+        ],
+        "edit_project": false,
+        "delete_project": false
+      },
+  
+      "task_management": {
+        "create_task": true,
+        "assign_task": true,
+        "update_status": true,
+        "statuses": [
+          "new",
+          "accepted",
+          "in_progress",
+          "completed"
+        ],
+        "fields": [
+          "task_title",
+          "project_id",
+          "content_type",
+          "platform",
+          "duration_seconds",
+          "dimensions",
+          "brief",
+          "status",
+          "assigned_to",
+          "created_at"
+        ]
+      }
+    },
+  
+    "supabase_schema_plan": {
+      "tables": {
+        "profiles": {
+          "purpose": "Extend Supabase auth users with role and basic info",
+          "columns": [
+            "id (uuid, auth.users)",
+            "role (client | admin)",
+            "full_name",
+            "is_active"
+          ]
+        },
+        "projects": {
+          "columns": [
+            "id",
+            "client_id",
+            "name",
+            "description",
+            "status",
+            "created_at"
+          ]
+        },
+        "tasks": {
+          "columns": [
+            "id",
+            "project_id",
+            "client_id",
+            "title",
+            "content_type",
+            "platform",
+            "duration_seconds",
+            "dimensions",
+            "brief",
+            "status",
+            "assigned_to",
+            "created_at"
+          ]
+        }
+      }
+    },
+  
+    "security_scope": {
+      "row_level_security": {
+        "enabled": true,
+        "rules": {
+          "client": "Can access only own projects and tasks",
+          "admin": "Can access all data"
+        }
+      }
+    },
+  
+    "ui_scope": {
+      "design_rules": [
+        "No AI illustrations",
+        "Minimal colors",
+        "shadcn default components",
+        "Status badges",
+        "Table + list views"
+      ]
+    },
+  
+    "out_of_scope_for_demo": [
+      "Payments",
+      "Subscriptions billing",
+      "File revisions",
+      "Notifications",
+      "Analytics",
+      "Team chat"
+    ],
+  
+    "success_criteria": {
+      "auth_works": true,
+      "role_based_access": true,
+      "task_flow_visible": true,
+      "ui_is_clean": true,
+      "code_is_readable": true
+    }
+  }
+  

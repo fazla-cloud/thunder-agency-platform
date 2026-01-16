@@ -1,0 +1,278 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  /* Theme: Thunder Brand Color Palette */
+  /* Color Palette:
+     #D7DDF4 - Light Lavender (Background)
+     #1B3FC4 - Royal Blue (Primary)
+     #3A5ACB - Medium Blue (Secondary)
+     #38FE14 - Vivid Lime Green (Accent)
+     #6D84D9 - Muted Periwinkle (Secondary elements)
+  */
+  
+  /* Border Radius */
+  --radius: 0.625rem;
+  
+  /* Primary Colors - Royal Blue */
+  --primary: hsl(228 76% 44%); /* #1B3FC4 */
+  --primary-foreground: hsl(0 0% 100%); /* White text on primary */
+  
+  /* Background Colors - White */
+  --background: hsl(0 0% 100%); /* #FFFFFF */
+  --foreground: hsl(228 76% 20%); /* Dark blue text */
+  
+  /* Card Colors - White with subtle tint */
+  --card: hsl(0 0% 100%); /* Pure white */
+  --card-foreground: hsl(228 76% 20%); /* Dark blue text */
+  
+  /* Popover Colors */
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(228 76% 20%);
+  
+  /* Secondary Colors - Medium Blue */
+  --secondary: hsl(228 58% 51%); /* #3A5ACB */
+  --secondary-foreground: hsl(0 0% 100%);
+  
+  /* Muted Colors - Light Lavender background */
+  --muted: hsl(228 58% 95%); /* Lighter version of background */
+  --muted-foreground: hsl(228 30% 40%); /* Muted blue text */
+  
+  /* Accent Colors - Vivid Lime Green */
+  --accent: hsl(110 99% 54%); /* #38FE14 */
+  --accent-foreground: hsl(228 76% 20%); /* Dark blue text on accent */
+  
+  /* Destructive (Error) Color - Using darker blue */
+  --destructive: hsl(228 76% 35%);
+  --destructive-foreground: hsl(0 0% 100%);
+  
+  /* Border and Input Colors - Muted Periwinkle */
+  --border: hsl(228 60% 75%); /* Lighter version of #6D84D9 */
+  --input: hsl(228 60% 75%);
+  --ring: hsl(228 58% 51%); /* Medium Blue for focus rings */
+  
+  /* Chart Colors - Using palette blues and green */
+  --chart-1: hsl(228 76% 44%); /* Royal Blue */
+  --chart-2: hsl(228 58% 51%); /* Medium Blue */
+  --chart-3: hsl(228 60% 64%); /* Muted Periwinkle */
+  --chart-4: hsl(110 99% 54%); /* Vivid Lime Green */
+  --chart-5: hsl(228 58% 80%); /* Light Lavender */
+  
+  /* Sidebar Colors - Royal Blue sidebar */
+  --sidebar: hsl(228 76% 44%); /* Royal Blue */
+  --sidebar-foreground: hsl(0 0% 100%); /* White text */
+  --sidebar-primary: hsl(228 58% 51%); /* Medium Blue for selected */
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(110 99% 54%); /* Lime Green for highlights */
+  --sidebar-accent-foreground: hsl(228 76% 20%);
+  --sidebar-border: hsl(228 76% 35%);
+  --sidebar-ring: hsl(228 60% 64%);
+  
+  /* Status Colors - Using palette colors */
+  --status-drafts-bg: hsl(228 58% 95%);
+  --status-drafts-text: hsl(228 76% 44%);
+  --status-in-progress-bg: hsl(110 99% 90%);
+  --status-in-progress-text: hsl(110 99% 30%);
+  --status-completed-bg: hsl(228 60% 85%);
+  --status-completed-text: hsl(228 76% 35%);
+  --status-archived-bg: hsl(228 58% 95%);
+  --status-archived-text: hsl(228 30% 50%);
+  --status-active-bg: hsl(110 99% 95%);
+  --status-active-text: hsl(110 99% 40%);
+}
+
+.dark {
+  /* Dark Theme - Thunder Brand Palette */
+  /* Darker versions of the palette for dark mode */
+  
+  --background: hsl(228 50% 8%); /* Dark blue background */
+  --foreground: hsl(228 30% 95%); /* Light text */
+  
+  --card: hsl(228 50% 12%); /* Darker card */
+  --card-foreground: hsl(228 30% 95%);
+  
+  --popover: hsl(228 50% 12%);
+  --popover-foreground: hsl(228 30% 95%);
+  
+  --primary: hsl(228 76% 55%); /* Lighter Royal Blue for dark mode */
+  --primary-foreground: hsl(0 0% 100%);
+  
+  --secondary: hsl(228 58% 60%); /* Lighter Medium Blue */
+  --secondary-foreground: hsl(0 0% 100%);
+  
+  --muted: hsl(228 50% 15%); /* Dark muted background */
+  --muted-foreground: hsl(228 30% 70%);
+  
+  --accent: hsl(110 99% 60%); /* Slightly lighter green */
+  --accent-foreground: hsl(228 50% 8%);
+  
+  --destructive: hsl(228 76% 50%);
+  --destructive-foreground: hsl(0 0% 100%);
+  
+  --border: hsl(228 50% 20%);
+  --input: hsl(228 50% 20%);
+  --ring: hsl(228 58% 60%);
+  
+  --chart-1: hsl(228 76% 55%);
+  --chart-2: hsl(228 58% 60%);
+  --chart-3: hsl(228 60% 65%);
+  --chart-4: hsl(110 99% 60%);
+  --chart-5: hsl(228 50% 25%);
+  
+  --sidebar: hsl(228 76% 35%); /* Darker Royal Blue */
+  --sidebar-foreground: hsl(0 0% 100%);
+  --sidebar-primary: hsl(228 58% 50%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(110 99% 55%);
+  --sidebar-accent-foreground: hsl(228 50% 8%);
+  --sidebar-border: hsl(228 76% 30%);
+  --sidebar-ring: hsl(228 60% 55%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply bg-background;
+  }
+  html:not(.dark) {
+    background-color: #FFFFFF;
+    background: #FFFFFF;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-geist-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html:not(.dark) body {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+  }
+  
+  /* Theme utility classes for consistent styling */
+  .theme-card {
+    @apply bg-card text-card-foreground border border-border rounded-lg shadow-sm;
+  }
+  
+  .theme-muted {
+    @apply bg-muted text-muted-foreground;
+  }
+  
+  .theme-primary {
+    @apply bg-primary text-primary-foreground;
+  }
+  
+  .theme-secondary {
+    @apply bg-secondary text-secondary-foreground;
+  }
+  
+  /* SaaS-focused typography improvements */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-3xl;
+  }
+  
+  h2 {
+    @apply text-2xl;
+  }
+  
+  h3 {
+    @apply text-xl;
+  }
+}
+
+@layer utilities {
+  /* Status badge utilities using theme variables */
+  .status-drafts {
+    background-color: var(--status-drafts-bg);
+    color: var(--status-drafts-text);
+    border: 1px solid var(--border);
+  }
+  
+  .status-in-progress {
+    background-color: var(--status-in-progress-bg);
+    color: var(--status-in-progress-text);
+    border: 1px solid var(--border);
+  }
+  
+  .status-completed {
+    background-color: var(--status-completed-bg);
+    color: var(--status-completed-text);
+    border: 1px solid var(--border);
+  }
+  
+  .status-archived {
+    background-color: var(--status-archived-bg);
+    color: var(--status-archived-text);
+    border: 1px solid var(--border);
+  }
+  
+  .status-active {
+    background-color: var(--status-active-bg);
+    color: var(--status-active-text);
+    border: 1px solid var(--border);
+  }
+  
+  /* SaaS-focused utility classes */
+  .saas-card {
+    @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .saas-button {
+    @apply font-medium transition-all duration-200;
+  }
+  
+  .saas-input {
+    @apply border-border focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all duration-200;
+  }
+}
